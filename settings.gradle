@@ -1,0 +1,4 @@
+rootProject.name = 'cloudTest'
+
+include ':apigateway'
+include ':eureka'
