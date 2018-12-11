@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiger.apigateway.dao.StaffMapper">
+  <resultMap id="BaseResultMap" type="com.tiger.apigateway.entity.Staff">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="staff_no" jdbcType="VARCHAR" property="staffNo" />
+    <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+    <result column="staff_pwd" jdbcType="VARCHAR" property="staffPwd" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, staff_no, staff_name, staff_pwd, email, department, telephone, create_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from staff_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from staff_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tiger.apigateway.entity.Staff">
+    insert into staff_info (order_id, staff_no, staff_name, 
+      staff_pwd, email, department, 
+      telephone, create_date)
+    values (#{orderId,jdbcType=VARCHAR}, #{staffNo,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, 
+      #{staffPwd,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiger.apigateway.entity.Staff">
+    insert into staff_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="staffNo != null">
+        staff_no,
+      </if>
+      <if test="staffName != null">
+        staff_name,
+      </if>
+      <if test="staffPwd != null">
+        staff_pwd,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffNo != null">
+        #{staffNo,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null">
+        #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffPwd != null">
+        #{staffPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiger.apigateway.entity.Staff">
+    update staff_info
+    <set>
+      <if test="staffNo != null">
+        staff_no = #{staffNo,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null">
+        staff_name = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffPwd != null">
+        staff_pwd = #{staffPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiger.apigateway.entity.Staff">
+    update staff_info
+    set staff_no = #{staffNo,jdbcType=VARCHAR},
+      staff_name = #{staffName,jdbcType=VARCHAR},
+      staff_pwd = #{staffPwd,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tiger.apigateway.entity.Staff">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="staff_no" jdbcType="VARCHAR" property="staffNo" />
+    <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+    <result column="staff_pwd" jdbcType="VARCHAR" property="staffPwd" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, staff_no, staff_name, staff_pwd, email, department, telephone, create_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from staff_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from staff_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tiger.apigateway.entity.Staff">
+    insert into staff_info (order_id, staff_no, staff_name, 
+      staff_pwd, email, department, 
+      telephone, create_date)
+    values (#{orderId,jdbcType=VARCHAR}, #{staffNo,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, 
+      #{staffPwd,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiger.apigateway.entity.Staff">
+    insert into staff_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="staffNo != null">
+        staff_no,
+      </if>
+      <if test="staffName != null">
+        staff_name,
+      </if>
+      <if test="staffPwd != null">
+        staff_pwd,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffNo != null">
+        #{staffNo,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null">
+        #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffPwd != null">
+        #{staffPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiger.apigateway.entity.Staff">
+    update staff_info
+    <set>
+      <if test="staffNo != null">
+        staff_no = #{staffNo,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null">
+        staff_name = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffPwd != null">
+        staff_pwd = #{staffPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiger.apigateway.entity.Staff">
+    update staff_info
+    set staff_no = #{staffNo,jdbcType=VARCHAR},
+      staff_name = #{staffName,jdbcType=VARCHAR},
+      staff_pwd = #{staffPwd,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.tiger.apigateway.entity.Staff">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="staff_no" jdbcType="VARCHAR" property="staffNo" />
+    <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+    <result column="staff_pwd" jdbcType="VARCHAR" property="staffPwd" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, staff_no, staff_name, staff_pwd, email, department, telephone, create_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from staff_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from staff_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tiger.apigateway.entity.Staff">
+    insert into staff_info (order_id, staff_no, staff_name, 
+      staff_pwd, email, department, 
+      telephone, create_date)
+    values (#{orderId,jdbcType=VARCHAR}, #{staffNo,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, 
+      #{staffPwd,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiger.apigateway.entity.Staff">
+    insert into staff_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="staffNo != null">
+        staff_no,
+      </if>
+      <if test="staffName != null">
+        staff_name,
+      </if>
+      <if test="staffPwd != null">
+        staff_pwd,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffNo != null">
+        #{staffNo,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null">
+        #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffPwd != null">
+        #{staffPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiger.apigateway.entity.Staff">
+    update staff_info
+    <set>
+      <if test="staffNo != null">
+        staff_no = #{staffNo,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null">
+        staff_name = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffPwd != null">
+        staff_pwd = #{staffPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiger.apigateway.entity.Staff">
+    update staff_info
+    set staff_no = #{staffNo,jdbcType=VARCHAR},
+      staff_name = #{staffName,jdbcType=VARCHAR},
+      staff_pwd = #{staffPwd,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>
