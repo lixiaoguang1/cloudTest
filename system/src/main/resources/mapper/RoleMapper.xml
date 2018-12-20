@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiger.system.dao.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.tiger.system.entity.Role">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="role_no" jdbcType="VARCHAR" property="roleNo" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, role_no, role_name, language
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from role_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tiger.system.entity.Role">
+    insert into role_info (order_id, role_no, role_name, 
+      language)
+    values (#{orderId,jdbcType=VARCHAR}, #{roleNo,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
+      #{language,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiger.system.entity.Role">
+    insert into role_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="roleNo != null">
+        role_no,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="language != null">
+        language,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleNo != null">
+        #{roleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiger.system.entity.Role">
+    update role_info
+    <set>
+      <if test="roleNo != null">
+        role_no = #{roleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiger.system.entity.Role">
+    update role_info
+    set role_no = #{roleNo,jdbcType=VARCHAR},
+      role_name = #{roleName,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>

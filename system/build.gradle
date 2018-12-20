@@ -1,0 +1,49 @@
+ext {
+    //jjwtVersion = '0.9.1'
+}
+
+dependencies {
+	compile "org.springframework.cloud:spring-cloud-starter-eureka"
+	compile "org.springframework.boot:spring-boot-starter-security"
+	compile "org.springframework.boot:spring-boot-starter-web"
+	compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1"
+	compile "mysql:mysql-connector-java:5.1.40"
+	compile "org.springframework.boot:spring-boot-starter-data-redis"
+	compile "org.springframework.boot:spring-boot-starter-cache"
+
+    //compile group: 'org.mybatis.generator', name: 'mybatis-generator-core', version:'1.3.2'
+    mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.3.5'
+    mybatisGenerator 'mysql:mysql-connector-java:5.1.40'
+    mybatisGenerator 'tk.mybatis:mapper:3.3.9'
+}
+
+configurations {
+    mybatisGenerator
+}
+// mybatis-generator.xml 配置路径
+//这里会遇到个问题：MyBatis Generator 通过xml生成，有日志但是没有生成文件成功的问题， 
+//原因：mac下是找不到 ./src 路径的，需要全路径，如下配置。windows则为src/main/resources/generator.xml
+/*task mybatisGenerator {
+    ant.taskdef(
+            name: 'mbgenerator',
+            classname: 'org.mybatis.generator.ant.GeneratorAntTask',
+            classpath: configurations.mybatisGenerator.asPath
+    )
+    
+    ant.mbgenerator(overwrite: true,
+            configfile: "F:/git/cloudTest/system/src/main/resources/generator.xml", verbose: true) 
+            {
+         propertyset {
+            //propertyref(name: 'targetProject')
+            //propertyref(name: 'userId')
+            //propertyref(name: 'driverClass')
+            //propertyref(name: 'connectionURL')
+            //propertyref(name: 'password')
+            //propertyref(name: 'src_main_java')
+            //propertyref(name: 'src_main_resources')
+            //propertyref(name: 'modelPackage')
+            //propertyref(name: 'mapperPackage')
+            //propertyref(name: 'sqlMapperPackage')
+        }
+    }
+}*/
