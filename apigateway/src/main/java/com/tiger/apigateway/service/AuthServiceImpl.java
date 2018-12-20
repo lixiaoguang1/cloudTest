@@ -6,18 +6,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.tiger.apigateway.entity.User;
+import com.tiger.apigateway.dao.StaffMapper;
+import com.tiger.apigateway.entity.Staff;
 import com.tiger.apigateway.security.JwtTokenUtil;
 import com.tiger.apigateway.security.JwtUser;
 
@@ -27,49 +26,47 @@ import com.tiger.apigateway.security.JwtUser;
 public class AuthServiceImpl implements AuthService {
 
 	
-    private AuthenticationManager authenticationManager;
     private UserDetailsService userDetailsService;
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private StaffMapper staffMapper;
+    
+    private Logger logger=LoggerFactory.getLogger(this.getClass());
 
     @Value("${jwt.tokenHead}")
     private String tokenHead;
 
     @Autowired
     public AuthServiceImpl(
-            AuthenticationManager authenticationManager,
+       //     AuthenticationManager authenticationManager,
             UserDetailsService userDetailsService,
             JwtTokenUtil jwtTokenUtil) {
-        this.authenticationManager = authenticationManager;
+       // this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @Override
-    public User register(User userToAdd) {
-        final String username = userToAdd.getUsername();
-//        if(userRepository.findByUsername(username)!=null) {
-//            return null;
-//        }
+    public Staff register(Staff userToAdd) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        final String rawPassword = userToAdd.getPassword();
-        userToAdd.setPassword(encoder.encode(rawPassword));
+        final String rawPassword = userToAdd.getStaffPwd();
+        userToAdd.setStaffPwd(encoder.encode(rawPassword));
         userToAdd.setLastPasswordResetDate(new Date());
         List<String> roles=new ArrayList<>();
         userToAdd.setRoles(roles);
-        return  userToAdd;//userRepository.insert(userToAdd);
+        staffMapper.insert(userToAdd);
+        return  userToAdd;
     }
 
     @Override
     public String login(String username, String password) {
-    	System.out.println("username:"+username);
-        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
-        System.out.println("userDetails1:");
-        final Authentication authentication = authenticationManager.authenticate(upToken);
-        System.out.println("userDetails2:");
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+    	logger.info("调用用户登录服务，产生Token信息");
+        //UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
+        //final Authentication authentication = authenticationManager.authenticate(upToken);
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
         final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        System.out.println("userDetails:"+userDetails);
         final String token = jwtTokenUtil.generateToken(userDetails);
+        logger.info("Token Info:{}",token);
         return token;
     }
 

@@ -1,9 +1,9 @@
 package com.tiger.apigateway.service;
 
-import com.tiger.apigateway.entity.User;
+import com.tiger.apigateway.entity.Staff;
 
 public interface AuthService {
-	User register(User userToAdd);
+	Staff register(Staff userToAdd);
     String login(String username, String password);
     String refresh(String oldToken);
 }

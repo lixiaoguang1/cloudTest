@@ -46,11 +46,13 @@
         <!-- 配置表信息 -->
         <!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample
             是否生成 example类 -->
-        <table schema="systemmanager" tableName="staff_info"
+         
+        <table schema="systemmanager" tableName="staff_info1"
                domainObjectName="Staff" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false">
         </table>
+         
 
     </context>
 </generatorConfiguration>

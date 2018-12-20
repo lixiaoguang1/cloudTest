@@ -1,3 +1,5 @@
 rootProject.name = 'cloudTest'
 include 'apigateway'
 include 'eureka'
+include 'front'
+include 'system'

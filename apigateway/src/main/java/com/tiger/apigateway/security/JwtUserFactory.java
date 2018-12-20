@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.tiger.apigateway.entity.StaffInfo;
+import com.tiger.apigateway.entity.Staff;
 
 
 public final class JwtUserFactory {
@@ -13,8 +13,7 @@ public final class JwtUserFactory {
     private JwtUserFactory() {
     }
 
-    public static JwtUser create(StaffInfo user) {
-    	System.out.println(user.toString());
+    public static JwtUser create(Staff user) {
         return new JwtUser(
                 user.getOrderId(),
                 user.getUsername(),

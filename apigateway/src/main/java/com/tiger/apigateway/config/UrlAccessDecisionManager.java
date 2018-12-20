@@ -36,10 +36,7 @@ public class UrlAccessDecisionManager implements AccessDecisionManager{
 			
 			logger.info("访问当前服务需要的角色信息:{}",needRole);
 			if("ROLE_LOGIN".equals(needRole)) {
-				System.out.println("?????????????????????????????????1111111111111111");
 				if(authentication instanceof AnonymousAuthenticationToken) {
-					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					//new BadCredentialsException("未登录").printStackTrace();
 					throw new BadCredentialsException("未登录");
 				}else {
 					return ;

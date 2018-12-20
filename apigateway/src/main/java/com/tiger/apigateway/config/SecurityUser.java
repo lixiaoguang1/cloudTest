@@ -5,27 +5,21 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.tiger.apigateway.entity.StaffInfo;
-public class SecurityUser extends StaffInfo implements UserDetails
+import com.tiger.apigateway.entity.Staff;
+public class SecurityUser extends Staff implements UserDetails
 {
 
     private static final long serialVersionUID = 1L;
-    public SecurityUser(StaffInfo staffInfo) {
+    public SecurityUser(Staff staffInfo) {
         if(staffInfo != null)
         {
-        	System.out.println("??????????????????????????????????");
             this.setOrderId(staffInfo.getOrderId());
             this.setStaffNo(staffInfo.getStaffNo());
-          //  this.setStaffName(staffInfo.getStaffName());
             this.setEmail(staffInfo.getEmail());
-           // this.setStaffPwd(staffInfo.getStaffPwd());
-          //  this.setSex(user.getSex());
             this.setCreateDate(staffInfo.getCreateDate());
             this.setUsername(staffInfo.getStaffNo());
             this.setPassword(staffInfo.getStaffPwd());
             this.setStaffPwd(staffInfo.getStaffPwd());
-            System.out.println("#########################################");
         }
     }
 

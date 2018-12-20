@@ -121,7 +121,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// 禁用缓存
         http.headers().cacheControl();
 //        
-//        //添加JWT filter
+//      //添加JWT filter
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 	}
 
