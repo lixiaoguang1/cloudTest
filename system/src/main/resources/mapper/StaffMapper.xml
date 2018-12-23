@@ -20,6 +20,13 @@
     from staff_info
     where order_id = #{orderId,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selects" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from staff_info
+    where staff_no LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from staff_info
     where order_id = #{orderId,jdbcType=VARCHAR}
@@ -28,7 +35,7 @@
     insert into staff_info (order_id, staff_no, staff_name, 
       staff_pwd, email, department, 
       telephone, create_date)
-    values (#{orderId,jdbcType=VARCHAR}, #{staffNo,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, 
+    values (UUID(), #{staffNo,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, 
       #{staffPwd,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
       #{telephone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
   </insert>

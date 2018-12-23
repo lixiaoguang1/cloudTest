@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <contextName>apigateway</contextName>
+  <appender 
+  	name="INFO_FILE" 
+  	class="ch.qos.logback.core.rolling.RollingFileAppender">
+  	<File>${logger.file}-info.log</File>
+  	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+  	   <fileNamePattern>${logger.file}-%d{yyyyMMdd}.log.%i</fileNamePattern>
+  	   <timeBasedFileNamingAndTriggeringPolicy
+  	      class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+  	      <maxFileSize>100MB</maxFileSize>
+  	   </timeBasedFileNamingAndTriggeringPolicy>
+  	   <maxHistory>2</maxHistory>
+  	</rollingPolicy>
+  	<layout class="ch.qos.logback.classic.PatternLayout">
+  	   <Pattern>
+  	    %d{yyyy-MM-dd HH:mm:ss.SSS} %-10contextName [%thread] %-5level%logger{36}-%msg%n
+  	   </Pattern>
+  	</layout>
+  </appender>
+  
+  <appender 
+  	name="CONSOLE" 
+  	class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <Pattern>
+  	    %d{yyyy-MM-dd HH:mm:ss.SSS} dev %-10contextName [%thread] %-5level %logger{36}-%msg%n
+  	  </Pattern>
+  	  <charset>GBK</charset> 
+    </encoder>
+  </appender>
+  
+  <root level="INFO">
+    <appender-ref ref="INFO_FILE"/>
+    <appender-ref ref="CONSOLE"/>
+  </root>
+  
+  <logger name="com.tiger.apigateway.dao" level="DEBUG" additivity="false">
+     <appender-ref ref="INFO_FILE"/>
+    <appender-ref ref="CONSOLE"/>
+  </logger>
+</configuration>

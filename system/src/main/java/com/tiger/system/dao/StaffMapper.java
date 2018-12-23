@@ -1,5 +1,7 @@
 package com.tiger.system.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.tiger.system.entity.Staff;
@@ -17,4 +19,6 @@ public interface StaffMapper {
     int updateByPrimaryKeySelective(Staff record);
 
     int updateByPrimaryKey(Staff record);
+    
+    List<Staff> selects(String keyword);
 }

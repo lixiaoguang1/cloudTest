@@ -23,7 +23,7 @@
   <insert id="insert" parameterType="com.tiger.system.entity.Role">
     insert into role_info (order_id, role_no, role_name, 
       language)
-    values (#{orderId,jdbcType=VARCHAR}, #{roleNo,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
+    values (UUID(), #{roleNo,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
       #{language,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tiger.system.entity.Role">
