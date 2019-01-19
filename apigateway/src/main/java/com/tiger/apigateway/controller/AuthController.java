@@ -36,6 +36,8 @@ public class AuthController {
     
     private Logger logger=LoggerFactory.getLogger(this.getClass());
     
+    
+    
     @RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(
     		@RequestBody JwtAuthenticationRequest authenticationRequest) 
@@ -71,6 +73,23 @@ public class AuthController {
     @RequestMapping(value = "${jwt.route.authentication.register}", method = RequestMethod.POST)
     public Staff register(@RequestBody Staff addedUser) throws AuthenticationException{
         return authService.register(addedUser);
+    }
+    
+    @RequestMapping(value = "${jwt.route.authentication.logout}", method = RequestMethod.GET)
+    public ResponseEntity<?> logout(HttpServletRequest request) throws AuthenticationException{
+    	String token_key = request.getHeader(tokenHeader);
+    	redisService.remove(token_key);
+        return ResponseEntity.ok(new JwtAuthenticationResponse("","200000"));
+    	
+    }
+    
+    @RequestMapping(value = "${jwt.route.authentication.current}", method = RequestMethod.GET)
+    public ResponseEntity<?> currentUsername(HttpServletRequest request){
+    	String token_key = request.getHeader(tokenHeader);
+    	String token=redisService.get(token_key);
+    	String username=authService.currentUser(token);
+    	logger.info("currentUser:{}",username);
+    	return ResponseEntity.ok(new JwtAuthenticationResponse(username,"200000"));
     }
 }
 

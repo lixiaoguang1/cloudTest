@@ -32,26 +32,30 @@ public class UrlAccessDecisionManager implements AccessDecisionManager{
 		Iterator<ConfigAttribute> iterator=configAttributes.iterator();
 		while(iterator.hasNext()) {
 			ConfigAttribute ca=iterator.next();
-			String needRole=ca.getAttribute();
+			String needRoles=ca.getAttribute();
 			
-			logger.info("访问当前服务需要的角色信息:{}",needRole);
-			if("ROLE_LOGIN".equals(needRole)) {
-				if(authentication instanceof AnonymousAuthenticationToken) {
-					throw new BadCredentialsException("未登录");
-				}else {
-					return ;
+			String [] roles=needRoles.split(",");
+			for (String needRole : roles) {
+				logger.info("访问当前服务需要的角色信息:{}",needRole);
+				if("ROLE_LOGIN".equals(needRole)) {
+					if(authentication instanceof AnonymousAuthenticationToken) {
+						throw new BadCredentialsException("未登录");
+					}/*else {
+						return ;
+					}*/
+				}
+				 //当前用户所具有的权限
+	            Collection<? extends GrantedAuthority> authorities 
+	               = authentication.getAuthorities();
+	            for (GrantedAuthority grantedAuthority : authorities) {
+	            	logger.info("current user role:{}",grantedAuthority.getAuthority());
+					if(grantedAuthority.getAuthority().equals(needRole)) {
+						return ;
+					}
+					logger.info("current user role {} is not service",grantedAuthority.getAuthority());
 				}
 			}
-			 //当前用户所具有的权限
-            Collection<? extends GrantedAuthority> authorities 
-               = authentication.getAuthorities();
-            for (GrantedAuthority grantedAuthority : authorities) {
-            	logger.info("current user role:{}",grantedAuthority.getAuthority());
-				if(grantedAuthority.getAuthority().equals(needRole)) {
-					return ;
-				}
-				logger.info("current user role {} is not service",grantedAuthority.getAuthority());
-			}
+			
             throw new AccessDeniedException("权限不足");
 		}
 		

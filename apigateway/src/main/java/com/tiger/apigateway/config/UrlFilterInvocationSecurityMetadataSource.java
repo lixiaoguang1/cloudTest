@@ -40,11 +40,16 @@ public class UrlFilterInvocationSecurityMetadataSource
 		String urlroles=securitySettings.getUrlroles();
 		logger.info("urlsroles:{}",urlroles);
 		//获取当前的请求地址
-		String requestUrl=((FilterInvocation)object).getRequestUrl();
-		logger.info("11111当前请求地址url:"+requestUrl);
+		//String method=((FilterInvocation)object).getHttpRequest().getMethod().toLowerCase();
+		String requestUrl=((FilterInvocation)object).getHttpRequest().getMethod().toLowerCase()
+				+"@"+((FilterInvocation)object).getHttpRequest().getRequestURI();
+		
+		logger.info("====当前请求地址url:"+
+		((FilterInvocation)object).getHttpRequest().getRequestURI());
+		logger.info("====当前请求地址url:"+requestUrl);
 		
 	    for(String url:permitall) {
-	    	if(pathMatcher.match(url, requestUrl)) {
+	    	if(pathMatcher.match(url, ((FilterInvocation)object).getHttpRequest().getRequestURI())) {
 	    		return null;
 	    	}
 	    }
@@ -58,17 +63,19 @@ public class UrlFilterInvocationSecurityMetadataSource
 //			return null;
 //		}
 		String [] arraysUrls=urlroles.split(";");
+		logger.info("??????"+pathMatcher.match("get@/systemManager/system/v1/staff/searchStaff",
+				requestUrl));
 		for (String string : arraysUrls) {
 			String [] urlrole=string.split("=");
 			logger.info("urlrole:{},requestUrl:{}",urlrole[0],requestUrl);
-			if(pathMatcher.match(urlrole[0].trim(),"/test/hello")) {
+			if(pathMatcher.match(urlrole[0].trim(),requestUrl)) {
 				logger.info("=================urlrole:{}",urlrole[0]);
 				return SecurityConfig.createList(urlrole[1]);
 			}
 		}
 		logger.info("==============================================!");
-		//没有匹配上的资源，都是登录访问
-        return null;
+		//没有匹配上的资源，都是登录访问  "ROLE_LOGIN"
+        return SecurityConfig.createList("ROLE_LOGIN");
 	}
 
 	@Override

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiger.apigateway.dao.ServiceMapper">
+  <resultMap id="BaseResultMap" type="com.tiger.apigateway.entity.Service">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+    <result column="service_name_cn" jdbcType="VARCHAR" property="serviceNameCn" />
+    <result column="creater_date" jdbcType="TIMESTAMP" property="createrDate" />
+    <collection property="roles" ofType="java.lang.String">
+      <result column="role_no" jdbcType="VARCHAR"/>
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, url, method, service_name, service_name_cn, creater_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from service_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getServices" resultMap="BaseResultMap">
+    SELECT 
+     service.order_id, url, method, service_name, service_name_cn, creater_date,role.role_no
+    FROM service_info service
+    LEFT JOIN service_role role ON role.service_no=service.order_id
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from service_info
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tiger.apigateway.entity.Service">
+    insert into service_info (order_id, url, method, 
+      service_name, service_name_cn, creater_date
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
+      #{serviceName,jdbcType=VARCHAR}, #{serviceNameCn,jdbcType=VARCHAR}, #{createrDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiger.apigateway.entity.Service">
+    insert into service_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+      <if test="serviceName != null">
+        service_name,
+      </if>
+      <if test="serviceNameCn != null">
+        service_name_cn,
+      </if>
+      <if test="createrDate != null">
+        creater_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null">
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceNameCn != null">
+        #{serviceNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="createrDate != null">
+        #{createrDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiger.apigateway.entity.Service">
+    update service_info
+    <set>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null">
+        service_name = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceNameCn != null">
+        service_name_cn = #{serviceNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="createrDate != null">
+        creater_date = #{createrDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiger.apigateway.entity.Service">
+    update service_info
+    set url = #{url,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      service_name = #{serviceName,jdbcType=VARCHAR},
+      service_name_cn = #{serviceNameCn,jdbcType=VARCHAR},
+      creater_date = #{createrDate,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>

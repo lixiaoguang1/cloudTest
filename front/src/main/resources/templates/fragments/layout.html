@@ -7,16 +7,16 @@
     <meta http-equiv="Cache-Control" content="no-store"/>
     <meta http-equiv="Expires" content="0" />
     <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">安全设计</title>
-    <link th:href="@{styles/global.css}"  rel="stylesheet" type="text/css"/>
-    <link th:href="@{styles/index.css}" rel="stylesheet"  type="text/css"/>
-    <script th:src="@{scripts/jquery.min.js}"></script>
-    <script th:src="@{scripts/jquery.cookie.js}"></script>
-    <script th:src="@{scripts/artDialog/artDialog.js}" />
-    <script th:src="@{scripts/common.js}"></script>
-    <script th:src="@{scripts/public/public.js}"></script>
-    <script th:src="@{scripts/public/json2.js}"></script>
-    <script type="text/javascript" th:src="@{scripts/validate/jquery.validate.min.js}"></script>
-	<script type="text/javascript" th:src="@{scripts/validate/chinese.js}"></script>
+    <link th:href="@{../styles/global.css}"  rel="stylesheet" type="text/css"/>
+    <link th:href="@{../styles/index.css}" rel="stylesheet"  type="text/css"/>
+    <script th:src="@{../scripts/jquery.min.js}"></script>
+    <script th:src="@{../scripts/jquery.cookie.js}"></script>
+    <script th:src="@{../scripts/artDialog/artDialog.js}" />
+    <script th:src="@{../scripts/common.js}"></script>
+    <script th:src="@{../scripts/public/public.js}"></script>
+    <script th:src="@{../scripts/public/json2.js}"></script>
+    <script type="text/javascript" th:src="@{../scripts/validate/jquery.validate.min.js}"></script>
+	<script type="text/javascript" th:src="@{../scripts/validate/chinese.js}"></script>
 </head>
 <body>
 <div class="headerBox">
@@ -25,10 +25,11 @@
             <a href="#"><img th:src="@{/front/images/logo.png}"/></a>
         </div>
         <div class="new-nav">
-            <h3>管理后台</h3>
+            <h5>管理后台</h5>
         </div>
         <div class="topUserInf f-right">
-            <span>欢迎您，<em th:text="${username}"> 用户</em></span>
+             <!-- th:text="${user}" -->
+            <span>欢迎您，<em id="currentUser" > 用户</em></span>
             <a href="javascript:void(0)" id="logout">[退出]</a>
         </div>
     </div>
@@ -47,16 +48,39 @@
         </td>
     </tr>
 </table>
-<form th:action="@{/logout}" method="post" id="logoutform">
+<!-- 
+<form th:action="@{//logout}" method="post" id="logoutform">
 </form>
+ -->
 <div class="footBox" th:replace="fragments/footer :: footer"></div>
 <script type="text/javascript">
     $(function () {
-        $("#logout").click(function () {
-            if (confirm('您确定退出吗？')) {
-                $("#logoutform").submit();
+    	$.ajax({
+            type: "GET",
+            url: "/auth/current",
+            headers: {"Content-type": "application/json"},
+            success: function (data) {
+                if(data.code=="200000"){
+                	$("#currentUser").text(data.token);
+                }
             }
         });
+    	
+        $("#logout").click(function () {
+            if (confirm('您确定退出吗？')) {
+                $.ajax({
+                    type: "GET",
+                    url: "/auth/logout",
+                    headers: {"Content-type": "application/json"},
+                    success: function (data) {
+                        if(data.code=="200000"){
+                        	window.location="/front/toLogin";
+                        }
+                    }
+                });
+            }
+        });
+        
     });
 </script>
 </body>

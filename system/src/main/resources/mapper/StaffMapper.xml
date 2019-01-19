@@ -10,21 +10,31 @@
     <result column="department" jdbcType="VARCHAR" property="department" />
     <result column="telephone" jdbcType="VARCHAR" property="telephone" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <collection property="roles1" ofType="com.tiger.system.entity.Role">
+		<id column="order_id1" jdbcType="VARCHAR" property="orderId" />
+    	<result column="role_no" jdbcType="VARCHAR" property="roleNo" />
+    	<result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    	<result column="language" jdbcType="VARCHAR" property="language" />
+	</collection>
   </resultMap>
   <sql id="Base_Column_List">
-    order_id, staff_no, staff_name, staff_pwd, email, department, telephone, create_date
+    staff.order_id, staff.staff_no, staff.staff_name, staff.staff_pwd, 
+    staff.email, staff.department, staff.telephone, staff.create_date
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
-    from staff_info
-    where order_id = #{orderId,jdbcType=VARCHAR}
+    <include refid="Base_Column_List" />,
+    role.order_id order_id1,role.role_no,role.role_name
+    FROM staff_info staff 
+    LEFT JOIN role_staff role_staff ON role_staff.`staff_no`=staff.`staff_no`
+    LEFT JOIN role_info role ON role_staff.`role_no`=role.`role_no`
+    WHERE staff.order_id = #{orderId,jdbcType=VARCHAR}
   </select>
   
   <select id="selects" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from staff_info
+    from staff_info staff
     where staff_no LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -38,6 +48,13 @@
     values (UUID(), #{staffNo,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, 
       #{staffPwd,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
       #{telephone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertStarfRoles">
+    insert into role_staff(`order_id`,`role_no`,`staff_no`)
+    values
+    <foreach collection="list" item="item" separator=",">
+       (UUID(),#{item,jdbcType=VARCHAR},#{staff,jdbcType=VARCHAR})
+    </foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.tiger.system.entity.Staff">
     insert into staff_info

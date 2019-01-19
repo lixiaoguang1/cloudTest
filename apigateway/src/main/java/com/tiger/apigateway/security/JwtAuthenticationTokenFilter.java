@@ -2,6 +2,7 @@ package com.tiger.apigateway.security;
 
 
 import java.io.IOException;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.tiger.apigateway.redis.service.IRedisService;
+
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	@Autowired
@@ -33,6 +36,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	private JwtTokenUtil jwtTokenUtil;
 	@Value("${securityconfig.permitall}")
 	private String [] permitall;
+	
+	@Autowired
+	private IRedisService<String, String> redisService;
 	
 	private Logger logger=LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
 
@@ -61,14 +67,16 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 //				||request.getRequestURI().contains("/front/images")){
 //			
 //		}
-		if (authHeader != null && authHeader.startsWith(tokenHead)) {
-			final String authToken = authHeader.substring(tokenHead.length());
+	    logger.info("authHeader:{}",authHeader);
+		String token=(String)redisService.get(authHeader);
+		if (token != null) {
+			//final String authToken = authHeader.substring(tokenHead.length());
 			// The part after "Bearer "
-			String username = jwtTokenUtil.getUsernameFromToken(authToken);
+			String username = jwtTokenUtil.getUsernameFromToken(token);
 			logger.info("checking authentication " + username);
 			if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-				if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+				if (jwtTokenUtil.validateToken(token, userDetails)) {
 					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 							userDetails, null, userDetails.getAuthorities());
 					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

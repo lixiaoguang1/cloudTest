@@ -5,16 +5,39 @@
     <id column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="role_no" jdbcType="VARCHAR" property="roleNo" />
     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="status" jdbcType="VARCHAR" property="status"/>
     <result column="language" jdbcType="VARCHAR" property="language" />
   </resultMap>
   <sql id="Base_Column_List">
     order_id, role_no, role_name, language
   </sql>
+  
+  <select id="selectAllRoles" resultMap="BaseResultMap">
+    SELECT
+      allrole.order_id, allrole.role_no, allrole.role_name, language,
+      case 
+        WHEN role.role_no IS NOT NULL THEN 1
+        ELSE 0
+      end as status 
+    FROM role_info allrole
+    LEFT JOIN 
+    <foreach collection="list" item="item" separator="UNION" open="(" close=")">
+       SELECT #{item.roleNo,jdbcType=VARCHAR} role_no
+    </foreach> role ON role.role_no=allrole.role_no
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from role_info
     where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectRoles" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role_info
+    where role_name LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from role_info

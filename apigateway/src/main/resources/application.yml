@@ -65,20 +65,26 @@ jwt:
       path: "/auth"
       refresh: "/refresh"
       register: "/auth/register"
+      logout: "/auth/logout"
+      current: "/auth/current"
 securityconfig:
   logoutsuccssurl: /
   #免登录的url地址 /front/tologin,/front/styles/**,/front/scripts/**,/front/images/**,/front/js/**
-  permitall: /front/**,/auth,/auth/**,/rest/**,/staff/register,/test/**
+  permitall: /front/**,/auth,/auth/**,/rest/**,/staff/register,/test/**,/favicon.ico
   deniedpage: /deny
   urlroles: /**/new/** = admin;
             /**/edit/** = admin,editor;
             /**/delete/** = admin;
-            /test/** = admin
+            /test/** = admin;
+            /systemManager/** = admin
 zuul:
   routes:
     front:
       service-id: front
-      path: /front/** 
+      path: /front/**
+    systemManager:
+      service-id: systemManager
+      path: /systemManager/** 
 logging:
   path: /logs/cloudTest/apigateway
   file: /logs/cloudTest/apigateway/apigateway.log

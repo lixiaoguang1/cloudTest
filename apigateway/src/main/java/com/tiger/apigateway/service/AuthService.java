@@ -6,4 +6,5 @@ public interface AuthService {
 	Staff register(Staff userToAdd);
     String login(String username, String password);
     String refresh(String oldToken);
+    String currentUser(String token);
 }

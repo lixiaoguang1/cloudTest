@@ -56,7 +56,7 @@ em{font-style:normal}
 .columnLeftMenu ul{padding:0 16px 10px 16px;height:auto;zoom:1.0;overflow-y:auto;border-top:1px solid #e1e1e1;}
 .columnLeftMenu ul li{float:left;width:148px;overflow:hidden;height:27px;line-height:27px;margin-top:8px;text-align:center;}
 .columnLeftMenu ul a{width:119px;height:27px;overflow:hidden;padding:0 12px;margin:0 auto;text-align:left;display:inline-block;}
-.columnLeftMenu ul a:hover,.columnLeftMenu ul a.currentPageNav{color:#FFF;background:url(/images/global/subMenuBk.png) no-repeat;}
+.columnLeftMenu ul a:hover,.columnLeftMenu ul a.currentPageNav{color:#FFF;background:url(../images/global/subMenuBk.png) no-repeat;}
 .whiteSpace{width:9px;}
 
 .rightColumnBox{width:822;padding-bottom:48px;background:#fff;border:1px solid #e1e1e1;text-align:center;}

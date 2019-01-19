@@ -1,6 +1,5 @@
 package com.tiger.system.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -18,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tiger.system.common.Constant;
+import com.tiger.system.dao.RoleMapper;
 import com.tiger.system.dao.StaffMapper;
+import com.tiger.system.entity.Role;
 import com.tiger.system.entity.Staff;
 import com.tiger.system.model.ResResult;
 
@@ -28,6 +29,8 @@ public class StaffController {
 	
 	@Autowired
 	private StaffMapper staffMapper;
+	@Autowired
+	private RoleMapper roleMapper;
 	
 	private final static Logger logger=
 			LoggerFactory.getLogger(StaffController.class);
@@ -40,13 +43,19 @@ public class StaffController {
 	@RequestMapping(value="/staff/addStaff"
 			,method=RequestMethod.POST)
 	@ResponseBody
-	public  ResResult addStaff(@RequestBody Staff staff) {
+	public  ResResult addStaff(Staff staff) {
 		ResResult result=new ResResult();
 		try{
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			staff.setStaffName(staff.getStaffNo());
 	        final String rawPassword = staff.getStaffPwd();
 	        staff.setStaffPwd(encoder.encode(rawPassword));
+	        logger.info("staffInfo:{}",staff.toString());
 			staffMapper.insert(staff);
+			//添加操作员，并添加管理员的角色信息
+			List<String> roles=staff.getRoles();
+			logger.info("添加当前操作员的角色信息");
+			staffMapper.insertStarfRoles(staff.getStaffNo(),roles);
 			result.setMessage("添加操作员信息成功");
 			result.setResCode(Constant.default_success_code);
 		}catch(Exception ex) {
@@ -65,7 +74,7 @@ public class StaffController {
 	@RequestMapping(value="/staff/updateStaff"
 			,method=RequestMethod.PUT)
 	@ResponseBody
-	public ResResult updateStaff(@RequestBody Staff staff) {
+	public ResResult updateStaff(Staff staff) {
 		ResResult result=new ResResult();
 		try{
 			if(null !=staff && null !=staff.getStaffPwd() && !"".equals(staff.getStaffPwd()))
@@ -120,8 +129,12 @@ public class StaffController {
 		logger.info("查询操作员信息begin");
 		try {
 			Staff staff=staffMapper.selectByPrimaryKey(staffId);
+			//查询所有角色信以及当前用户拥有的角色信息
+			List<Role> list=staff.getRoles1();
+			List<Role> roles=roleMapper.selectAllRoles(list);
+			staff.setRoles1(roles);
 			result.setMessage("获取操作员信息成功");
-			result.setResCode(Constant.default_success_code);
+			result.setResCode(Constant.default_success_code);			
 			result.setData(staff);
 		}catch(Exception ex) {
 			logger.error("获取操作员信息失败:{}",ex.getMessage());

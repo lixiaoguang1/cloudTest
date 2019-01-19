@@ -85,10 +85,9 @@ function verSubmit()
         data: JSON.stringify(data),
         headers: {"Content-type": "application/json"},
         success: function (data) {
-            alert(JSON.stringify(data));
             if(data.code=="200000"){
             	$.cookie("Authorization", data.token);
-            	window.location="index";
+            	window.location="staff/index";
             }
         }
     });

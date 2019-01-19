@@ -16,7 +16,7 @@ $(function () {
 //分页的参数设置
 var getOpt = function(){
     var opt = {
-        items_per_page: 1,	//每页记录数
+        items_per_page: 10,	//每页记录数
         num_display_entries: 3, //中间显示的页数个数 默认为10
         current_page:0,	//当前页
         num_edge_entries:1, //头尾显示的页数个数 默认为0
@@ -42,7 +42,7 @@ var pageaction = function(){
 //    });
 	  $.ajax({
 	        type: "get",
-	        url: "/system/staff/v1/findStaffInfos/0/1?keyword=",
+	        url: "/systemManager/system/v1/staff/searchStaffs/0/10?keyword=",
 	        success: function (data) {
 	            currentPageData = data.data.list;
 	            $(".pagination").pagination(data.data.total, getOpt());
@@ -56,15 +56,15 @@ var pageselectCallback = function(page_index, jq, size){
         fillData(currentPageData);
         currentPageData = null;
     }else
-        $.get('/system/staff/v1/findStaffInfos/'+(page_index+1)+'/'+size+'?keyword=',
+        $.get('/systemManager/system/v1/staff/searchStaffs/'+(page_index+1)+'/'+size+'?keyword=',
         	function(data){
             fillData(data.data.list);
         });
 }
 //填充分页数据
 function fillData(data){
-    var editrole = $("#editrole").val();
-    var deleterole = $("#deleterole").val();
+    var editrole = $("#editStaff").val();
+    var deleterole = $("#deleteStaff").val();
     var $list = $('#tbodyContent').empty();
     $.each(data,function(k,v) {
         var html = "";
@@ -74,13 +74,13 @@ function fillData(data){
             '<td>' + (v.email == null ? '' : v.email) + '</td>' +
             '<td>' + (v.department == null ? '' : v.department) + '</td>'+
             '<td>' + (v.telephone == null ? '' : v.telephone) + '</td>';
-        html += '<td><a class="c-50a73f mlr-6" href="javascript:void(0)" onclick="showDetail(\'' + v.id + '\')">查看</a>';
+        html += '<td><a class="c-50a73f mlr-6" href="javascript:void(0)" onclick="showDetail(\'' + v.orderId + '\')">查看</a>';
 
         if (editrole == 'true')
-            html += '<a class="c-50a73f mlr-6" href="javascript:void(0)" onclick="edit(\'' + v.id + '\')">修改</a>';
+            html += '<a class="c-50a73f mlr-6" href="javascript:void(0)" onclick="edit(\'' + v.orderId + '\')">修改</a>';
 
         if(deleterole == 'true')
-            html += '<a class="c-50a73f mlr-6" href="javascript:void(0)" onclick="del(\''+ v.id+'\')">删除</a>';
+            html += '<a class="c-50a73f mlr-6" href="javascript:void(0)" onclick="del(\''+ v.orderId +'\')">删除</a>';
 
         html +='</td></tr>' ;
 
@@ -90,7 +90,7 @@ function fillData(data){
 //分页结束
 var artdialog ;
 function showDetail(id){
-    $.get("./"+id,{ts:new Date().getTime()},function(data){
+    $.get("./show/"+id,{ts:new Date().getTime()},function(data){
         art.dialog({
             lock:true,
             opacity:0.3,
@@ -135,12 +135,26 @@ function del(id){
     if(!confirm("您确定删除此记录吗？")){
         return false;
     }
-    $.get("./delete/"+id,{ts:new Date().getTime()},function(data){
+    ///system/v1/staff/delStaff?staffId=d1372811-06c1-11e9-bb84-7ce9d3bb50c2
+    /*$.delete("/system/v1/staff/delStaff",
+    		{staffId:id,ts:new Date().getTime()},function(data){
         if(data==1){
             alert("删除成功");
             pageaction();
         }else{
             alert(data);
+        }
+    });*/
+    
+    $.ajax({
+        type: "DELETE",
+        url: "/systemManager/system/v1/staff/delStaff?staffId="+id,
+        headers: {"Content-type": "application/json"},
+        success: function (data) {
+            if(data.resCode=="200000"){
+            	alert("删除成功");
+            	pageaction();
+            }
         }
     });
 }

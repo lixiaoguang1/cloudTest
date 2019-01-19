@@ -1,8 +1,10 @@
 package com.tiger.system.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.tiger.system.entity.Staff;
 
@@ -21,4 +23,7 @@ public interface StaffMapper {
     int updateByPrimaryKey(Staff record);
     
     List<Staff> selects(String keyword);
+    
+    int insertStarfRoles(@Param("staff") String staff,
+    		@Param("list") List<String> list) throws SQLException;
 }

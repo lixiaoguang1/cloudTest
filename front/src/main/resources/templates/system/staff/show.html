@@ -1,0 +1,44 @@
+<div class="addInfBtn">
+    <input type="hidden" name="orderId" id="orderId" th:value="${orderId}"/>
+    <h3 class="itemTit"><span>用户信息</span></h3>
+    <table class="addNewInfList">
+        <tr>
+            <th>操作员</th>
+            <td width="240"><input class="inp-list w-200 clear-mr f-left" type="text" 
+                 id="staffNo"  readonly="true"/></td>
+            <th>邮箱</th>
+            <td><input class="inp-list w-200 clear-mr f-left" type="text" id="email"  readonly="true" /></td>
+        </tr>
+        <tr>
+            <th>部门</th>
+            <td width="240">
+                <input class="inp-list w-200 clear-mr f-left" type="text" id="department"  readonly="true"/>
+            </td>
+            <th>电话</th>
+            <td>
+                <input class="inp-list w-200 clear-mr f-left" type="text" id="telephone" readonly="true"/>
+            </td>
+        </tr>
+        <tr>
+            <th>角色</th>
+            <td>
+                <select name="roles" id="roles" multiple="multiple" readonly="true">
+                   <!-- 
+                    <option th:each="role:${user.roles}"
+                            th:text="${#strings.length(role.name)>20?#strings.substring(role.name,0,20)+'...':role.name}"
+                            th:selected="true"
+                            ></option>
+                             -->
+                </select>
+            </td>
+            <th></th>
+            <td>
+                <!-- <input  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" class="inp-list w-200 clear-mr f-left" th:value="${user.createdate} ? ${#dates.format(user.createdate,'yyyy-MM-dd HH:mm:ss')} :''" readonly="true"/> -->
+            </td>
+        </tr>
+    </table>
+    <div class="bottomBtnBox">
+        <a class="btn-93X38 backBtn" href="javascript:closeDialog(0)">返回</a>
+    </div>
+</div>
+<script th:src="@{../scripts/staff/show.js}"></script>

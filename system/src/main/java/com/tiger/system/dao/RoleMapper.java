@@ -1,6 +1,9 @@
 package com.tiger.system.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.tiger.system.entity.Role;
 
@@ -17,4 +20,9 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+    
+    
+    List<Role> selectRoles(String keyword);
+    
+    List<Role> selectAllRoles(@Param("list") List<Role> list);
 }

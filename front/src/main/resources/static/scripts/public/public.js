@@ -7,7 +7,8 @@ $.ajaxSetup({
         401: function() {
             var conf=confirm('您还未登录，或者您的登录已失效。是否需要重新登录？');
             if(conf==true){
-                window.location.reload();
+                //window.location.reload();
+            	window.localtion="/front/toLogin"
             }
         },
         403: function() {
@@ -188,7 +189,8 @@ $(function () {
     //var token = $("meta[name='_csrf']").attr("content");
     //var header = $("meta[name='_csrf_header']").attr("content");
 	//headers: {"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1NDQwMjU3NzIsInN1YiI6ImxpeGciLCJjcmVhdGVkIjoxNTQxNDMzNzcyMjk1fQ.-WMEfDj2b7SL99NqGcXViy3Fip7dqMjKKWbcebtf8syoQ28mCFeXzdirUjpgcF4WB_wTgExGSGdNoWXLP_Acsw"}
-    $(document).ajaxSend(function(e, xhr, options) {
-        xhr.setRequestHeader("Authorization", "Bearer "+$.cookie("Authorization"));
+    //"Bearer "+
+	$(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader("Authorization", $.cookie("Authorization"));
     });
 });

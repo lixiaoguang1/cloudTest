@@ -46,6 +46,9 @@
       #{staffPwd,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
       #{telephone,jdbcType=VARCHAR}, SYSDATE())
   </insert>
+  
+
+  
   <insert id="insertSelective" parameterType="com.tiger.apigateway.entity.Staff">
     insert into staff_info
     <trim prefix="(" suffix=")" suffixOverrides=",">

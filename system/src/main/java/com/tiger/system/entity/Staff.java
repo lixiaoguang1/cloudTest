@@ -2,6 +2,7 @@ package com.tiger.system.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Staff implements Serializable {
     private String orderId;
@@ -19,10 +20,35 @@ public class Staff implements Serializable {
     private String telephone;
 
     private Date createDate;
+    
+    private List<String> roles;
+    
+    private List<Role> roles1;
 
     private static final long serialVersionUID = 1L;
 
-    public String getOrderId() {
+    
+    public List<Role> getRoles1() {
+		return roles1;
+	}
+
+	public void setRoles1(List<Role> roles1) {
+		this.roles1 = roles1;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public String getOrderId() {
         return orderId;
     }
 
@@ -85,4 +111,12 @@ public class Staff implements Serializable {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+	@Override
+	public String toString() {
+		return "Staff [orderId=" + orderId + ", staffNo=" + staffNo + ", staffName=" + staffName + ", staffPwd="
+				+ staffPwd + ", email=" + email + ", department=" + department + ", telephone=" + telephone
+				+ ", createDate=" + createDate + ", roles=" + roles + "]";
+	}
+    
 }
