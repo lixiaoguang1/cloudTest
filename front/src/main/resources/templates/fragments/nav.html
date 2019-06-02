@@ -10,9 +10,12 @@
 
         <h6 ><span class="f-right"></span>系统管理</h6>
         <ul >
+        <!-- 
             <li><a th:classappend="${page == '/system/department/index' ? 'currentPageNav' : ''}" th:href="@{/front/department/index}">部门管理</a></li>
             <li><a th:classappend="${page == '/system/role/index' ? 'currentPageNav' : ''}" th:href="@{/front/role/index}">角色管理</a></li>
+             -->
             <li><a th:classappend="${page == '/system/staff/index' ? 'currentPageNav' : ''}" th:href="@{/front/staff/index}">用户管理</a></li>
+            <li><a th:classappend="${page == '/system/service/index' ? 'currentPageNav' : ''}" th:href="@{/front/service/index}">权限管理</a></li>
         </ul>
 
     </div>

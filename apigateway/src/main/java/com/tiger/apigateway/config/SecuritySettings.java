@@ -57,16 +57,17 @@ public class SecuritySettings {
     	List<Service> list=serviceMapper.getServices();
     	StringBuffer sb=new StringBuffer();
     	for (Service service : list) {
-    		
-    		sb.append(service.getMethod()+"@"+service.getUrl()+"=");
-    		StringBuffer sb1=new StringBuffer();
     		List<String> roles=service.getRoles();
-    		for (String role : roles) {
-				sb1.append(role+",");
-			}
-    		String tempRole=sb1.toString().substring(0, sb1.toString().length()-1);
-    		sb.append(tempRole+";");
-    		
+    		if(roles !=null && roles.size()>0) {
+    			sb.append(service.getMethod()+"@"+service.getUrl()+"=");
+        		StringBuffer sb1=new StringBuffer();
+        		
+        		for (String role : roles) {
+    				sb1.append(role+",");
+    			}
+        		String tempRole=sb1.toString().substring(0, sb1.toString().length()-1);
+        		sb.append(tempRole+";");
+    		}
 		}
     	logger.info("service:role:{}",sb.toString());
     	redisService.add("service:role", sb.toString());

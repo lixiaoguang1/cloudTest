@@ -150,7 +150,8 @@ public class RoleController {
 			 result.setMessage("查询角色信息成功");
 			 result.setResCode(Constant.default_success_code);
 		 }catch(Exception ex) {
-			 logger.error("查询角色信息出错");
+			 ex.printStackTrace();
+			 logger.error("查询角色信息出错:{}",ex.getMessage());
 			 result.setMessage("查询角色信息失败");
 			 result.setResCode(Constant.default_fail_code);
 		 }

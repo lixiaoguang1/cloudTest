@@ -35,9 +35,13 @@
   
   <select id="selectRoles" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,0 as status
     from role_info
-    where role_name LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+    <where>
+      <if test="keyword !=null and keyword !=''">
+         role_name LIKE CONCAT('%',#{keyword,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from role_info
@@ -49,6 +53,17 @@
     values (UUID(), #{roleNo,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
       #{language,jdbcType=VARCHAR})
   </insert>
+  
+  <insert id="insertServiceRoleRelation">
+   insert into service_role(`order_id`,`role_no`,`service_no`)
+   values
+   <if test="list !=null and list.size>0">
+     <foreach collection="list" item="item" separator=",">
+   		(UUID(),#{item,jdbcType=VARCHAR},#{serviceNo,jdbcType=VARCHAR})
+     </foreach>
+   </if>
+  </insert>
+  
   <insert id="insertSelective" parameterType="com.tiger.system.entity.Role">
     insert into role_info
     <trim prefix="(" suffix=")" suffixOverrides=",">

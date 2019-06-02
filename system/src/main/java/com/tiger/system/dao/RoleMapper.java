@@ -21,8 +21,12 @@ public interface RoleMapper {
 
     int updateByPrimaryKey(Role record);
     
-    
-    List<Role> selectRoles(String keyword);
+    /**
+     * 添加角色服务的关联关系
+     * @return
+     */
+    int insertServiceRoleRelation(@Param("serviceNo") String serviceNo,@Param("list") List<String> roles);
+    List<Role> selectRoles(@Param("keyword") String keyword);
     
     List<Role> selectAllRoles(@Param("list") List<Role> list);
 }

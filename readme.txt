@@ -1,20 +1,20 @@
-1¡¢ÓÃ»§µÇÂ¼½Ó¿Ú
+1ã€ç”¨æˆ·ç™»å½•æ¥å£
 http://localhost:10001/auth/
 {"username":"admin","password":"123456"}
-2¡¢Ìí¼Ó£¨×¢²á£©ÓÃ»§ĞÅÏ¢
+2ã€æ·»åŠ ï¼ˆæ³¨å†Œï¼‰ç”¨æˆ·ä¿¡æ¯
 http://localhost:10001/auth/register
 {"staffNo":"test","staffName":"test","staffPwd":"123456",
 "email":"arcsin721@12.com","department":"department1",
 "telephone":"1111"}
-//Mybatis ×Ô¶¯Éú³É´úÂë
+//Mybatis è‡ªåŠ¨ç”Ÿæˆä»£ç 
 gradle mybatisGenerator
 
-ÏµÍ³µÇÂ¼Ê×Ò³
+ç³»ç»Ÿç™»å½•é¦–é¡µ
 http://localhost:10001/front/toLogin
 
 
 2018-12-23 
-Ìí¼Ó²Ù×÷Ô±ĞÅÏ¢
+æ·»åŠ æ“ä½œå‘˜ä¿¡æ¯
 http://localhost:9000/systemManager/system/v1/staff/addStaff  
 POST
 {
@@ -22,11 +22,11 @@ POST
   "staffName":"test001",
   "staffPwd":"123456"
   "email":"arcsin721@163.com",
-  "department":"²¿ÃÅ1",
+  "department":"éƒ¨é—¨1",
   "telephone":"1234567"
 }
 
-ĞŞ¸Ä²Ù×÷Ô±ĞÅÏ¢
+ä¿®æ”¹æ“ä½œå‘˜ä¿¡æ¯
 
 http://localhost:9000/systemManager/system/v1/staff/updateStaff
 PUT
@@ -34,43 +34,43 @@ PUT
   "staffNo":"test001222",
   "staffName":"test001",
   "email":"arcsin721@163.com",
-  "department":"²¿ÃÅ1",
+  "department":"éƒ¨é—¨1",
   "telephone":"1234567",
   "orderId":"d1372811-06c1-11e9-bb84-7ce9d3bb50c2"
 }
 
-É¾³ı²Ù×÷Ô±ĞÅÏ¢
+åˆ é™¤æ“ä½œå‘˜ä¿¡æ¯
 http://localhost:9000/system/v1/staff/delStaff?staffId=d1372811-06c1-11e9-bb84-7ce9d3bb50c2
 http://localhost:10001/systemManager/system/v1/staff/delStaff?staffId=test100
 
-»ñÈ¡²Ù×÷Ô±ĞÅÏ¢
+è·å–æ“ä½œå‘˜ä¿¡æ¯
 http://localhost:9000/systemManager/system/v1/staff/searchStaff?staffId=622b52cf-8dc1-11e8-81f9-7ce9d3bb50c2
-²éÑ¯²Ù×÷Ô±ĞÅÏ¢
+æŸ¥è¯¢æ“ä½œå‘˜ä¿¡æ¯
 http://localhost:9000/systemManager/system/v1/staff/searchStaffs/2/1?keyword=
 2018-12-23 
-Ìí¼Ó½ÇÉ«ĞÅÏ¢
+æ·»åŠ è§’è‰²ä¿¡æ¯
 http://localhost:9000/system/v1/role/addRole
 {
   "roleNo":"common",
-  "roleName":"ÆÕÍ¨²Ù×÷Ô±",
+  "roleName":"ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½Ô±",
   "language":"en"
 }
-ĞŞ¸Ä½ÇÉ«ĞÅÏ¢
+ä¿®æ”¹è§’è‰²ä¿¡æ¯
 http://localhost:9000/system/v1/role/updateRole
 {
   "orderId":"6c5141e9-085b-11e9-9f57-7ce9d3bb50c2",
   "roleNo":"common",
-  "roleName":"ÆÕÍ¨²Ù×÷Ô±",
+  "roleName":"ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½Ô±",
   "language":"zh"
 }
-²éÑ¯½ÇÉ«ĞÅÏ¢
+æŸ¥è¯¢è§’è‰²ä¿¡æ¯
 http://localhost:9000/system/v1/role/searchRole?roleId=6c5141e9-085b-11e9-9f57-7ce9d3bb50c2
 http://localhost:9000/system/v1/role/searchRoles/1/2?keyword=
-É¾³ı½ÇÉ«ĞÅÏ¢
+åˆ é™¤è§’è‰²ä¿¡æ¯
 http://localhost:9000/system/v1/role/deleteRole?roleId=6c5141e9-085b-11e9-9f57-7ce9d3bb50c2
 
 
-²é¿´¶Ë¿ÚºÅ£º
+æŸ¥çœ‹ç«¯å£å·ï¼š
 netstat -aon|findstr "10000"
 tasklist|findstr "4252"
 taskkill /f /t /im yundetectservice.exe
